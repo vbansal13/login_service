@@ -1,0 +1,115 @@
+basePath: /v1
+definitions:
+  model.ResponseResultModel:
+    properties:
+      error:
+        type: string
+      result:
+        type: string
+    type: object
+  model.UserLoginRequestModel:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  model.UserLoginResponseModel:
+    properties:
+      access_token:
+        type: string
+    type: object
+  model.UserRegisterRequestModel:
+    properties:
+      email:
+        type: string
+      firstname:
+        type: string
+      lastname:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  model.UserResponseModel:
+    properties:
+      email:
+        type: string
+      firstname:
+        type: string
+      lastname:
+        type: string
+      username:
+        type: string
+    type: object
+info:
+  contact:
+    email: vbansal13@gmail.com
+    name: Login API Support
+  description: Swagger API for Login Service.
+  license: {}
+  termsOfService: http://swagger.io/terms/
+  title: Login API
+  version: "1.0"
+paths:
+  /me:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UserResponseModel'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ResponseResultModel'
+      summary: Fetch user profile
+    post:
+      parameters:
+      - description: user info
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserRegisterRequestModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ResponseResultModel'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ResponseResultModel'
+      summary: Registers a new user
+  /me/login:
+    post:
+      parameters:
+      - description: user credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserLoginRequestModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UserLoginResponseModel'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ResponseResultModel'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.ResponseResultModel'
+      summary: Login a user
+swagger: "2.0"
